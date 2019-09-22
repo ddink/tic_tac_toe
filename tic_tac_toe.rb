@@ -55,27 +55,27 @@ def player_move(board, board_matrix, x_or_o)
 end
 
 def computer_move(board, board_matrix, x_or_o)
-  	computer_mark = x_or_o == "X" ? "O" : "X"
+	computer_mark = x_or_o == "X" ? "O" : "X"
     
-    player_combos = board.each_index.select do |index|
-      	board[index] == x_or_o
-    end
+  player_combos = board.each_index.select do |index|
+		board[index] == x_or_o
+	end
 
-    computer_combos = board.each_index.select do |index|
-      	board[index] == computer_mark
-    end
+	computer_combos = board.each_index.select do |index|
+		board[index] == computer_mark
+	end
     
-  	x_or_o_combos = player_combos + computer_combos
+	x_or_o_combos = player_combos + computer_combos
 
-  	open_spots = board_matrix.delete_if do |k, v|
-    	x_or_o_combos.include?(v)
-  	end
+	open_spots = board_matrix.delete_if do |k, v|
+		x_or_o_combos.include?(v)
+	end
 
-  	computer_move = open_spots.keys.sample
+	computer_move = open_spots.keys.sample
 
-    if player_combos.count - 1 == computer_combos.count
-      	add_move_to_board(board, BOARD_MATRIX, computer_move, computer_mark)
-    end
+	if player_combos.count - 1 == computer_combos.count
+		add_move_to_board(board, BOARD_MATRIX, computer_move, computer_mark)
+	end
 end
 
 def position_taken?(board, board_matrix, player_move)
@@ -88,31 +88,31 @@ def valid_move?(board, board_matrix, move)
 end
 
 def add_move_to_board(board, board_matrix, move, x_or_o)
-  	if valid_move?(board, board_matrix, move)
-    	board[board_matrix[move]] = x_or_o
-  	end
+	if valid_move?(board, board_matrix, move)
+		board[board_matrix[move]] = x_or_o
+	end
 end
 
 def game_won?(board)
-  	x_combos = board.each_index.select { |x| board[x] == "X" }
-  	o_combos = board.each_index.select { |o| board[o] == "O" }
+	x_combos = board.each_index.select { |x| board[x] == "X" }
+	o_combos = board.each_index.select { |o| board[o] == "O" }
 
-  	if WIN_COMBINATIONS.include?(x_combos)
-    	puts "X has won!"
-    	return true
-  	elsif WIN_COMBINATIONS.include?(o_combos)
-    	puts "O has won!"
-    	return true
-  	end
+	if WIN_COMBINATIONS.include?(x_combos)
+		puts "X has won!"
+		return true
+	elsif WIN_COMBINATIONS.include?(o_combos)
+		puts "O has won!"
+		return true
+	end
 end
 
 def play_game(board)
-  	player_mark = x_or_o?
+	player_mark = x_or_o?
 
-  	until game_won?(board)
-    	player_move(board, BOARD_MATRIX, player_mark)
-    	computer_move(board, BOARD_MATRIX, player_mark)  
-  	end
+	until game_won?(board)
+		player_move(board, BOARD_MATRIX, player_mark)
+		computer_move(board, BOARD_MATRIX, player_mark)
+	end
 end
 
 board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]

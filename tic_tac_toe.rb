@@ -93,7 +93,7 @@ def add_move_to_board(board, move, x_or_o)
 	end
 end
 
-def game_won?(board)
+def game_won(board)
 	x_combos = board.each_index.select { |x| board[x] == "X" }
 	o_combos = board.each_index.select { |o| board[o] == "O" }
 
@@ -109,7 +109,7 @@ end
 def play_game(board)
 	player_mark = x_or_o?
 
-	until game_won?(board)
+	until game_won(board)
 		player_move(board, player_mark)
 		computer_move(board, player_mark)
 	end

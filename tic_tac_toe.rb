@@ -10,14 +10,14 @@ WIN_COMBINATIONS = [
 ]
 
 BOARD_MATRIX = {
-	"A1" => 0, 
-	"A2" => 3, 
-	"A3" => 6, 
-	"B1" => 1, 
-	"B2" => 4, 
-	"B3" => 7, 
-	"C1" => 2, 
-	"C2" => 5, 
+	"A1" => 0,
+	"A2" => 3,
+	"A3" => 6,
+	"B1" => 1,
+	"B2" => 4,
+	"B3" => 7,
+	"C1" => 2,
+	"C2" => 5,
 	"C3" => 8
 }
 
@@ -45,18 +45,18 @@ def x_or_o?
 	player_mark
 end
 
-def player_move(board, board_matrix, x_or_o)
+def player_move(board, x_or_o)
 	display_board(board)
 
 	puts "Where do you want to move?"
 	player_move = gets.chomp
 
-  add_move_to_board(board, BOARD_MATRIX, player_move, x_or_o)
+  add_move_to_board(board, player_move, x_or_o)
 end
 
-def computer_move(board, board_matrix, x_or_o)
+def computer_move(board, x_or_o)
 	computer_mark = x_or_o == "X" ? "O" : "X"
-    
+
   player_combos = board.each_index.select do |index|
 		board[index] == x_or_o
 	end
@@ -64,32 +64,32 @@ def computer_move(board, board_matrix, x_or_o)
 	computer_combos = board.each_index.select do |index|
 		board[index] == computer_mark
 	end
-    
+
 	x_or_o_combos = player_combos + computer_combos
 
-	open_spots = board_matrix.delete_if do |k, v|
+	open_spots = BOARD_MATRIX.delete_if do |k, v|
 		x_or_o_combos.include?(v)
 	end
 
 	computer_move = open_spots.keys.sample
 
 	if player_combos.count - 1 == computer_combos.count
-		add_move_to_board(board, BOARD_MATRIX, computer_move, computer_mark)
+		add_move_to_board(board, computer_move, computer_mark)
 	end
 end
 
-def position_taken?(board, board_matrix, player_move)
-	position = board_matrix[player_move]
+def position_taken?(board, player_move)
+	position = BOARD_MATRIX[player_move]
 	true if board[position] != " "
 end
 
-def valid_move?(board, board_matrix, move)
-	true if board_matrix.keys.include?(move) && !position_taken?(board, board_matrix, move)
+def valid_move?(board, move)
+	true if BOARD_MATRIX.keys.include?(move) && !position_taken?(board, move)
 end
 
-def add_move_to_board(board, board_matrix, move, x_or_o)
-	if valid_move?(board, board_matrix, move)
-		board[board_matrix[move]] = x_or_o
+def add_move_to_board(board, move, x_or_o)
+	if valid_move?(board, move)
+		board[BOARD_MATRIX[move]] = x_or_o
 	end
 end
 
@@ -110,8 +110,8 @@ def play_game(board)
 	player_mark = x_or_o?
 
 	until game_won?(board)
-		player_move(board, BOARD_MATRIX, player_mark)
-		computer_move(board, BOARD_MATRIX, player_mark)
+		player_move(board, player_mark)
+		computer_move(board, player_mark)
 	end
 end
 

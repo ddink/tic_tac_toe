@@ -38,7 +38,7 @@ def x_or_o?
 	player_mark = gets.chomp
 
 	until player_mark.to_s == "X" || player_mark.to_s == "O"
-    puts "Which player do you want to be? X or O?"
+		puts "Which player do you want to be? X or O?"
 		player_mark = gets.chomp
 	end
 
@@ -51,13 +51,13 @@ def player_move(board, x_or_o)
 	puts "Where do you want to move?"
 	player_move = gets.chomp
 
-  add_move_to_board(board, player_move, x_or_o)
+	add_move_to_board(board, player_move, x_or_o)
 end
 
 def computer_move(board, x_or_o)
 	computer_mark = x_or_o == "X" ? "O" : "X"
 
-  player_combos = board.each_index.select do |index|
+	player_combos = board.each_index.select do |index|
 		board[index] == x_or_o
 	end
 
@@ -99,10 +99,10 @@ def game_won?(board)
 
 	if WIN_COMBINATIONS.include?(x_combos)
 		puts "X has won!"
-		return true
+		true
 	elsif WIN_COMBINATIONS.include?(o_combos)
 		puts "O has won!"
-		return true
+		true
 	end
 end
 
